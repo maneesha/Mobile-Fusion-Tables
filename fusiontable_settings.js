@@ -351,7 +351,8 @@ customInfoboxHtml: "<div style='color:black'>{{#if isListView}} {{row.name}} {{e
     // int              = snap to zoom level if ratio between current and nearby zoom radii
     //                      is greater than this (in either direction)
     snapToNearbyZoomIfRatioGreaterThan: true
-  }
+  },
+  map_centroid: new google.maps.LatLng(39.952, -75.163)
 
 
 });
