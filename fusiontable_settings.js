@@ -29,18 +29,17 @@ var MapsLib = MapsLib || {};
   // See https://developers.google.com/fusiontables/docs/v1/migration_guide for more info
 
   // The encrypted Table ID of your Fusion Table (found under File => About)
-  MapsLib.fusionTableId = "13xmU6wANRJb0Niqcdz5Tr0xWh4AyV0yN10xMxPc";
+  MapsLib.fusionTableId = "12SZra19zyTFkVWu5BzJacuZgLUZjj1m-bXYCjkY";
 
   // *New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   // *Important* this key is for demonstration purposes. please register your own.
-  MapsLib.googleApiKey ="AIzaSyAMVBSXes-6P-gWaxRj20GK8NT6WDVpozM";
-  
+  MapsLib.googleApiKey ="AIzaSyAt-73WNp-LVpud_sSlwJ7lk73sYSNq_4o";
+
 
   // DONE!  YOU COULD DELETE EVERYTHING AFTER THIS POINT AND STILL HAVE A WORKING APP.
-  // BELOW ARE CUSTOM OVERRIDES TO MAKE YOUR APP MORE AWESOME.  UNCOMMENT EACH SECTION AS YOU GO.
 
-  // IF YOU GET STUCK, PLEASE VISIT https://github.com/sfbrigade/Mobile-Fusion-Tables
-  // YOU CAN SUBMIT AN ISSUE OR CONTACT AN AUTHOR.
+  // BELOW ARE CUSTOM OVERRIDES TO MAKE YOUR APP MORE AWESOME.
+  // UNCOMMENT EACH SECTION AS YOU GO.
 
 
 $.extend(MapsLib, {
@@ -92,48 +91,163 @@ $.extend(MapsLib, {
   //  If "allColumns" is true, "columns" will simply override label/match settings for the specified columns
   //  Fields for numerical columns use exact match- they have no support for contains match.
   //    (Create a drop-down to search within ranges in numerical value.)
+*/
 
   searchPage: { 
     allColumns: false,
-    distanceFilter: { 
-      dropDown: [ ["Anywhere", "0", true], ["2 blocks", "400 meters"], ["1/2 mile", ".5 miles"], ["1 mile"], ["2 miles"] ]
-    },
-    dropDowns: [ 
-      { label: "Rating Filter", options: [
-        ["Any Rating", "'last_score' > 0", true],
-        ["Good", "'last_score' > 90"],
-        ["Adequate", "'last_score' > 85 AND 'last_score' <= 90"],
-        ["Needs Improvement", "'last_score' > 70 AND 'last_score' <= 85"],
-        ["Poor", "'last_score' <= 70 AND 'last_score' > 0"]
-      ] }
-    ],
-    columns: [
-      {label: "Name", column: "name"},
-      {label: "Violations", column: "violations"}
-    ],
-  },
-*/
+    distanceFilter: {},
+
+    dropDowns: [
+    {label: "Choose day of week", 
+     options: [
+       ["Any", "", true],
+       ["Monday", "'day' = 'Monday'"],
+       ["Tuesday", "'day' = 'Tuesday'"],
+       ["Wednesday", "'day'='Wednesday'"], 
+       ["Thursday", "'day' = 'Thursday'"],
+       ["Friday", "'day' = 'Friday'"],
+       ["Saturday", "'day' = 'Saturday'"],
+       ["Sunday", "'day' = 'Sunday'"]
+    ]},
+    {label: "Year round or seasonal",
+     options: [
+       ["Any", "", true],
+       ["Year Round", "'season' = 'year round'"],
+       ["Seasonal", "'season' = 'seasonal'"]
+    ]},
+    {label: "Choose a vendor", 
+     options: [
+      ["Any", "", true],
+      ["A.T. Buzby Farm", "'vendors' CONTAINS 'A.T. Buzby Farm'"],
+      ["Anchor Nursery", "'vendors' CONTAINS 'Anchor Nursery'"],
+      ["Apple Tree Goat Dairy", "'vendors' CONTAINS 'Apple Tree Goat Dairy'"],
+      ["Beechwood Orchards", "'vendors' CONTAINS 'Beechwood Orchards'"],
+      ["Bennet Compost", "'vendors' CONTAINS 'Bennet Compost'"],
+      ["Big Sky Bakery", "'vendors' CONTAINS 'Big Sky Bakery'"],
+      ["Birchrun Hills", "'vendors' CONTAINS 'Birchrun Hills'"],
+      ["Blooming Glen Farm", "'vendors' CONTAINS 'Blooming Glen Farm'"],
+      ["Blue Mountain Vineyards", "'vendors' CONTAINS 'Blue Mountain Vineyards'"],
+      ["Brogue Hydroponics", "'vendors' CONTAINS 'Brogue Hydroponics'"],
+      ["Buckview Produce", "'vendors' CONTAINS 'Buckview Produce'"],
+      ["Clay Brick Farms", "'vendors' CONTAINS 'Clay Brick Farms'"],
+      ["Countryside Bakery & Farm", "'vendors' CONTAINS 'Countryside Bakery & Farm'"],
+      ["Cranberry Creek Farm", "'vendors' CONTAINS 'Cranberry Creek Farm'"],
+      ["Culton Farm", "'vendors' CONTAINS 'Culton Farm'"],
+      ["Davidsons Exotic Mushrooms", "'vendors' CONTAINS 'Davidsons Exotic Mushrooms'"],
+      ["Down to Earth Harvest", "'vendors' CONTAINS 'Down to Earth Harvest'"],
+      ["Eden Garden Farm", "'vendors' CONTAINS 'Eden Garden Farm'"],
+      ["Fahnestock Fruit Farm", "'vendors' CONTAINS 'Fahnestock Fruit Farm'"],
+      ["Farm Truck", "'vendors' CONTAINS 'Farm Truck'"],
+      ["Fifth of a Farm", "'vendors' CONTAINS 'Fifth of a Farm'"],
+      ["Forest View Bakery", "'vendors' CONTAINS 'Forest View Bakery'"],
+      ["Frecon Farms", "'vendors' CONTAINS 'Frecon Farms'"],
+      ["FreshaPeel Hummus", "'vendors' CONTAINS 'FreshaPeel Hummus'"],
+      ["Fruitwood Farms", "'vendors' CONTAINS 'Fruitwood Farms'"],
+      ["Good Spoon", "'vendors' CONTAINS 'Good Spoon'"],
+      ["Green Aisle Grocery", "'vendors' CONTAINS 'Green Aisle Grocery'"],
+      ["Green Zebra", "'vendors' CONTAINS 'Green Zebra'"],
+      ["Griggstown Quail Farm", "'vendors' CONTAINS 'Griggstown Quail Farm'"],
+      ["Hands on the Earth Orchard", "'vendors' CONTAINS 'Hands on the Earth Orchard'"],
+      ["Herbal Springs Farmstead", "'vendors' CONTAINS 'Herbal Springs Farmstead'"],
+      ["Highland Orchards", "'vendors' CONTAINS 'Highland Orchards'"],
+      ["Hillacres Pride", "'vendors' CONTAINS 'Hillacres Pride'"],
+      ["Hilltop Farm", "'vendors' CONTAINS 'Hilltop Farm'"],
+      ["Hoagsland's Farm", "'vendors' CONTAINS 'Hoagsland's Farm'"],
+      ["Homestead Garden", "'vendors' CONTAINS 'Homestead Garden'"],
+      ["Hurley's Landscaping", "'vendors' CONTAINS 'Hurley's Landscaping'"],
+      ["Jennie & Frank Artisan Gelato", "'vendors' CONTAINS 'Jennie & Frank Artisan Gelato'"],
+      ["Jennings 1785 Farm", "'vendors' CONTAINS 'Jennings 1785 Farm'"],
+      ["Jimmies Cupcake Co.", "'vendors' CONTAINS 'Jimmies Cupcake Co.'"],
+      ["John and Kira's", "'vendors' CONTAINS 'John and Kira's'"],
+      ["John Esch Produce", "'vendors' CONTAINS 'John Esch Produce'"],
+      ["Landisdale Farm", "'vendors' CONTAINS 'Landisdale Farm'"],
+      ["Lil Pop Shop", "'vendors' CONTAINS 'Lil Pop Shop'"],
+      ["Livengood Family Farm", "'vendors' CONTAINS 'Livengood Family Farm'"],
+      ["Local 215", "'vendors' CONTAINS 'Local 215'"],
+      ["Lone Wolfe Farm", "'vendors' CONTAINS 'Lone Wolfe Farm'"],
+      ["Long View Farm", "'vendors' CONTAINS 'Long View Farm'"],
+      ["Los Taquitos de Puebla", "'vendors' CONTAINS 'Los Taquitos de Puebla'"],
+      ["Love Bar", "'vendors' CONTAINS 'Love Bar'"],
+      ["Lucky Old Souls burger truck", "'vendors' CONTAINS 'Lucky Old Souls burger truck'"],
+      ["Made in the Shade", "'vendors' CONTAINS 'Made in the Shade'"],
+      ["Margerum Herbs", "'vendors' CONTAINS 'Margerum Herbs'"],
+      ["Market Day Canele", "'vendors' CONTAINS 'Market Day Canele'"],
+      ["Metropolitan Bakery", "'vendors' CONTAINS 'Metropolitan Bakery'"],
+      ["Mill Creek Farm", "'vendors' CONTAINS 'Mill Creek Farm'"],
+      ["Mini Trini", "'vendors' CONTAINS 'Mini Trini'"],
+      ["Mount Pleasant", "'vendors' CONTAINS 'Mount Pleasant'"],
+      ["Neil's Knife Sharpening Service", "'vendors' CONTAINS 'Neil's Knife Sharpening Service'"],
+      ["North Star Orchard", "'vendors' CONTAINS 'North Star Orchard'"],
+      ["Otolith Sustainable Seafood", "'vendors' CONTAINS 'Otolith Sustainable Seafood'"],
+      ["Paradocx Wines", "'vendors' CONTAINS 'Paradocx Wines'"],
+      ["Penn Hill Produce Farm", "'vendors' CONTAINS 'Penn Hill Produce Farm'"],
+      ["Pennypack Farms", "'vendors' CONTAINS 'Pennypack Farms'"],
+      ["Philly Fair Trade Roasters", "'vendors' CONTAINS 'Philly Fair Trade Roasters'"],
+      ["Philly Urban Creators", "'vendors' CONTAINS 'Philly Urban Creators'"],
+      ["PorcSalt", "'vendors' CONTAINS 'PorcSalt'"],
+      ["Primordia Mushrooms", "'vendors' CONTAINS 'Primordia Mushrooms'"],
+      ["Quaff Meadows", "'vendors' CONTAINS 'Quaff Meadows'"],
+      ["Quarryville Orchard", "'vendors' CONTAINS 'Quarryville Orchard'"],
+      ["Queens Farm", "'vendors' CONTAINS 'Queens Farm'"],
+      ["Rics Breads", "'vendors' CONTAINS 'Rics Breads'"],
+      ["Riehl Family Farm", "'vendors' CONTAINS 'Riehl Family Farm'"],
+      ["Rineer Family Farms", "'vendors' CONTAINS 'Rineer Family Farms'"],
+      ["Root Mass Farm", "'vendors' CONTAINS 'Root Mass Farm'"],
+      ["Sarah Bakes", "'vendors' CONTAINS 'Sarah Bakes'"],
+      ["Savoie Organics", "'vendors' CONTAINS 'Savoie Organics'"],
+      ["Shenks Berry Farm", "'vendors' CONTAINS 'Shenks Berry Farm'"],
+      ["Slow Rise Bakery", "'vendors' CONTAINS 'Slow Rise Bakery'"],
+      ["Solly Bros. Farm", "'vendors' CONTAINS 'Solly Bros. Farm'"],
+      ["Spring Hills Farm", "'vendors' CONTAINS 'Spring Hills Farm'"],
+      ["Stargazers Vineyard", "'vendors' CONTAINS 'Stargazers Vineyard'"],
+      ["Stryker Farm", "'vendors' CONTAINS 'Stryker Farm'"],
+      ["Talulas Table", "'vendors' CONTAINS 'Talulas Table'"],
+      ["Taproot Farm", "'vendors' CONTAINS 'Taproot Farm'"],
+      ["Tassot Apiaries", "'vendors' CONTAINS 'Tassot Apiaries'"],
+      ["The McCanns Farm", "'vendors' CONTAINS 'The McCanns Farm'"],
+      ["Three Springs Fruit Farm", "'vendors' CONTAINS 'Three Springs Fruit Farm'"],
+      ["Triple Tree Flowers", "'vendors' CONTAINS 'Triple Tree Flowers'"],
+      ["Urban Girls Produce", "'vendors' CONTAINS 'Urban Girls Produce'"],
+      ["Urban Nutrition Initiative", "'vendors' CONTAINS 'Urban Nutrition Initiative'"],
+      ["Urban Tree Connection/Neighborhood Foods", "'vendors' CONTAINS 'Urban Tree Connection/Neighborhood Foods'"],
+      ["vendors not known ", "'vendors' CONTAINS 'vendors not known '"],
+      ["Walnut Springs Farm", "'vendors' CONTAINS 'Walnut Springs Farm'"],
+      ["Weavers Way Farm", "'vendors' CONTAINS 'Weavers Way Farm'"],
+      ["Wild Flour Bakery", "'vendors' CONTAINS 'Wild Flour Bakery'"],
+      ["Wonderful Good Market", "'vendors' CONTAINS 'Wonderful Good Market'"],
+      ["Wyck House", "'vendors' CONTAINS 'Wyck House'"],
+      ["Z Food Farm", "'vendors' CONTAINS 'Z Food Farm'"],
+      ["Zea May", "'vendors' CONTAINS 'Zea May'"],
+      ["Zsas Gourmet Ice Cream", "'vendors' CONTAINS 'Zsas Gourmet Ice Cream'"]
+     ]}
+    ]//closes dropDowns list
+  },  //closes searchPage:
+
 
 
   ///////////////////////
   // 3. CUSTOM CONTENT //
   ///////////////////////
 
-/*
-  // Title bar (including title of website)
-  title: "SF Food Inspections",
 
+  // Title bar (including title of website)
+  title: "Philadelphia Area Farmers Markets",
+  aboutPage: "Find farmers markets in the Philadelphia by location, day of week, or participating vendors. <br><br>I developed this site over a few months in summer 2013, a little bit at a time while my baby son napped.  There may be some inaccuracies, like a day or time that's wrong, or a vendor that's not really at a market, or a market that's missing entirely.  It's also all based on the 2013 season, and since it's fall now, many markets are closed.  If you know a market is closed for the season, let me know and I'll note it in this app.  Submit any of those changes <a href='https://docs.google.com/forms/d/1Keh4D0Cj6kvcoVa-uCdt5iLJdHI6TBN0pzTntuG5KVQ/viewform'>here</a> and I'll make the necessary changes on this site.  <br><br> Also, there are probably some features you wish this map had.  I have some ideas myself but they're not all feasible given my time, my budget, and my skills.  But if you want to share any ideas, feel free to submit those <a href='https://docs.google.com/forms/d/1Keh4D0Cj6kvcoVa-uCdt5iLJdHI6TBN0pzTntuG5KVQ/viewform'>here</a> too and I'll consider them.<br><br>Many thanks to the folks who developed the template for this app: <br> Mobile Fusion Tables was originally based on Derek Eder's Fusion Table Searchable Map Template.  This is an SF Brigade project for Code for America. Started by Mark Brenig-Jones, completed by Rego Sen, with contributions from Sidney Zhang and Andrew Byrne.  Clone the repo <a href='https://github.com/sfbrigade/Mobile-Fusion-Tables'>here</a> to make your own mapping app.  Or contact me to hire me to build it for you.",
+/*
   // Contents of the About Page.  You can use "{title}" to insert your title.
   aboutPage: " \
     <h3>About {title}</h3> \
     <p>This is a demonstration of a Mobile Template using Fusion Tables.  Developed by SF Brigade for Code For America, it's an adaptation of Derek Eder's searchable Fusion Table template, licensed under the <a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/License' target='_blank'>MIT License</a>.  This particular application uses health inspection data for businesses in San Francisco.</p> \
     <p>To use this template for your own Fusion Table data, <a href='https://github.com/sfbrigade/Mobile-Fusion-Tables' target='_blank'>clone this repository</a> and replace the fields inside fusiontable_settings.js to match your content.</p> \
     ",
+*/
+   addrMarkerImage:    'http://maps.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
+/*
 
   // This will go in your style block.  Useful if customizing your infoboxes.
   customCSS: " \
-    .infobox-header, .ui-li-desc, li, #score-text { font-family: Arial, Helvetica, Geneva, sans-serif; white-space:normal;} \
-    .infobox-map { width:220px; height:107px;} \
+    .infobox-header, .ui-li-desc, #score-text { font-family: Arial, Helvetica, Geneva, sans-serif; white-space:normal;} \
+    .infobox-map { width:220px; height:100px;} \
     .infobox-header { display:inline; padding-right: 10px; } \
     .infobox-subheader { padding-top: 5px; } \
     .moreinfo { margin-left:7px; min-width:18px; position:absolute; \
@@ -161,7 +275,11 @@ $.extend(MapsLib, {
 
   // delimitedColumns (optional): specify delimiter per column, and row.COLUMN_NAME will return an array
   delimitedColumns: {"violations": ";"},
+*/
 
+customInfoboxHtml: "<div style='color:black'>{{#if isListView}} {{row.name}} {{else}} <a href='http://www.google.com'> {{row.name}} </a> {{/if}}</div>  {{row.day}} {{row.start_time}} to {{row.end_time}}. <br> <div style = 'white-space:pre-wrap'>{{row.at_place}}</div> {{#if isListView}}<div style='white-space:pre-wrap; color:#484848;'>Vendors: {{row.vendors}} </div>{{/if}}",
+
+/*
   customInfoboxHtml: " \
     {{#if isListView}} \
       <div> \
@@ -176,14 +294,13 @@ $.extend(MapsLib, {
     {{else}} \
       <strong>Last inspected: {{row.last_inspection_date}}</strong> \
       <br>{{row.address}}</p> \
-      <p class='ui-li-desc infobox-subheader'> \
+      <p class='ui-li-desc infobox-subheader'><b>Recent violations:</b> \
       {{#if row.violations}} \
-        <b>Recent violations ({{row.violations.length}}):</b> \
         {{#each row.violations}} \
           <br>- {{this}} \
         {{/each}} \
       {{else}} \
-        <b>Recent violations:</b> None \
+        None \
       {{/if}} \
     {{/if}} \
     </p></div>",
@@ -206,10 +323,11 @@ $.extend(MapsLib, {
 
   // Center and zoom radius that your map defaults to when location services are off.
   // If useDefaultMapBounds is true (see section 2), this also determines which addresses get priority with autocomplete
+  */
   defaultMapBounds: {
 
     // Use [latitude, longitude] or address
-    center: "San Francisco, CA",
+    center: "Philadelphia, PA",
 
     // "X miles" or "X meters"
     radius: "6 miles"
@@ -217,23 +335,23 @@ $.extend(MapsLib, {
 
   // Set useNearbyLocation to false if you don't want to get the user's location.
   useNearbyLocation: {
-    startAtNearbyLocation:      true,
+    startAtNearbyLocation:     true,
 
     // If true: use nearby location only if we're within default map bounds
     //          otherwise, post boundsExceededMessage (if non-empty) and use mapDefaultCenter.
     onlyWithinDefaultMapBounds: true,
-    boundsExceededMessage:      "Your location is far away from San Francisco.  Defaulting to city limits.",
+    boundsExceededMessage:      "Your location is far away from Philadelphia.  Defaulting to city limits.",
 
     // use this zoom radius if starting at nearby location
-    nearbyZoomRadius:           "200 meters",
+    nearbyZoomRadius:           "1000 meters",
 
     // Snap to nearby zoom radius when user hits "Nearby"?  Options are:
     // true             = always snap to zoom level
     // false (default)  = never snap to zoom level
     // int              = snap to zoom level if ratio between current and nearby zoom radii
     //                      is greater than this (in either direction)
-    snapToNearbyZoomIfRatioGreaterThan: 8
+    snapToNearbyZoomIfRatioGreaterThan: true
   }
-  */
+
 
 });
