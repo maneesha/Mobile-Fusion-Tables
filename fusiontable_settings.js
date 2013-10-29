@@ -95,7 +95,8 @@ $.extend(MapsLib, {
 
   searchPage: { 
     allColumns: false,
-    distanceFilter: {},
+    //distanceFilter: {},
+    addressShow: false,
 
     dropDowns: [
     {label: "Choose day of week", 
