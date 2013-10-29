@@ -271,7 +271,7 @@ $.extend(MapsLib, {
   delimitedColumns: {"violations": ";"},
 */
 
-customInfoboxHtml: "<div style='color:black'>{{#if isListView}} {{row.name}} {{else}} <a href='http://www.google.com'> {{row.name}} </a> {{/if}}</div>  {{row.day}} {{row.start_time}} to {{row.end_time}}. <br> <div style = 'white-space:pre-wrap'>{{row.at_place}}</div> {{#if isListView}}<div style='white-space:pre-wrap; color:#484848;'>Vendors: {{row.vendors}} </div>{{/if}}",
+customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {{else}} <a href= {{ row.website }}> {{row.name}} </a> {{/if}} </div>  {{row.day}} {{row.start_time}} to {{row.end_time}}. <br> <div style = 'white-space:pre-wrap'>{{row.at_place}}</div> {{#if isListView}} <div style='white-space:pre-wrap; color:#484848;'>Vendors: {{row.vendors}} </div> {{/if}}",
 
 /*
   customInfoboxHtml: " \
