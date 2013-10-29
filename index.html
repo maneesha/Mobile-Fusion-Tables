@@ -76,15 +76,17 @@
 
   <div data-role="page" id="page-map">
     <div data-theme="a" data-role="header">
+
   <!-- About button -->
       <a id="about" data-role="button" data-transition="slide"
       data-direction="reverse" href=
       "#page-about" data-icon="info" data-iconpos="left" class=
-      "ui-btn-left">About</a>
+      "ui-btn-left">About this app</a>
+  
   <!-- Search button -->
   <a data-role="button" id="search_page"
       data-transition="slide" href="#page-search" data-icon=
-      "search" data-iconpos="right" class="ui-btn-right">Search</a>
+      "search" data-iconpos="right" class="ui-btn-right">Search markets</a>
       <h3><span id="titlebar"></span></h3>
     </div>
 
@@ -104,21 +106,23 @@
       </div>
     </div>
 
-  <!-- Nearby button: 
+  <!-- Nearby button: DISABLED BECAUSE LOCATION SERVICE IS NOT WORKING -->
     <div data-theme="a" data-role="footer" data-position="fixed"
     style="height:42px">
+
+    <!--
       <a id="nearby" data-role="button" href="#nearby" data-icon=
       "location" data-iconpos="left" class="ui-btn-left">
       <span id="nearby-name">Nearby</span></a>
   -->
 
 
-  <!-- List button -->
+  <!-- List button  -->
       <a data-role="button" href="#page-list" data-icon="bars" id=
       "listview" data-transition="slideup" data-iconpos="right"
       class="ui-btn-right">View As List</a>
     </div>
-  </div>
+  </div> <!--DOES THIS HAVE A MATCHING DIV?? -->
 
   <!-- About view -->
   <div data-role="page" id="page-about">
