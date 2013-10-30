@@ -1216,7 +1216,8 @@ $.extend(MapsLib, {
 
   updateListView: function() {
       var whereClause = MapsLib.locationColumn + " not equal to ''";
-      var orderClause = "";
+      //Results returned alphabetically.
+      var orderClause = "name";
       if (MapsLib.customSearchFilter.length > 0) {
         whereClause += " AND " + MapsLib.customSearchFilter;
       }
@@ -1246,7 +1247,9 @@ $.extend(MapsLib, {
       else
       {
         // FusionTable query limitation: There can at most be one spatial condition or "order by distance" condition.  We can't do both.
-        orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
+        //orderClause changed to name since location services don't work anyways.  
+        //orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
+        orderClause = 'name';
         orderClause += limitClause;
       }
 
