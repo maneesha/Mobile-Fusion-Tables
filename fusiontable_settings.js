@@ -114,7 +114,8 @@ $.extend(MapsLib, {
      options: [
        ["Any", "", true],
        ["Year Round", "'season' = 'year round'"],
-       ["Seasonal", "'season' = 'seasonal'"]
+       ["May be Open", "'season' = 'seasonal'"],
+       ["Closed for Season", "'season' = 'closed for season'"]
     ]},
     {label: "Choose a vendor", 
      options: [
