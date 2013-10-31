@@ -110,13 +110,19 @@ $.extend(MapsLib, {
        ["Saturday", "'day' = 'Saturday'"],
        ["Sunday", "'day' = 'Sunday'"]
     ]},
+
+//Google Fusion Table Column 'season':['year round', 'seasonal']
+//Google Fusion Table Column 'closed': ['closed', null]
+
     {label: "Year round or seasonal",
      options: [
        ["Any", "", true],
        ["Year Round", "'season' = 'year round'"],
-       ["May be Open", "'season' = 'seasonal'"],
-       ["Closed for Season", "'season' = 'closed for season'"]
+       ["Seasonal", "'season' = 'seasonal'"]
     ]},
+
+    //selector to choose to include markets closed for season
+    
     {label: "Choose a vendor", 
      options: [
       ["Any", "", true],
