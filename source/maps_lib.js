@@ -977,8 +977,14 @@ $.extend(MapsLib, {
         select: MapsLib.locationColumn,
         where:  whereClause
       },
-      styleId: 2,
-      templateId: 3,
+
+    ///////NEED TO SET styleId & templateId
+    ///////go to map view, publish, get html/js
+    //////Find styleId & templateId codes there
+    //////more info:  http://stackoverflow.com/questions/18417223/why-is-fusion-table-style-not-reflected-in-google-map
+
+      styleId: 8,
+      templateId: 10,
       suppressInfoWindows: true
     });
 

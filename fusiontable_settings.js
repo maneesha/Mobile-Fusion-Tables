@@ -122,7 +122,7 @@ $.extend(MapsLib, {
     ]},
 
     //selector to choose to include markets closed for season
-    
+
     {label: "Choose a vendor", 
      options: [
       ["Any", "", true],
@@ -320,8 +320,10 @@ customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {
 /*
   // Override the location column in your Fusion Table (useful if you have multiple columns)
   // NOTE: if you have "latitude" and "longitude" columns, just use "latitude"
-  //locationColumn:     "latitude",
 
+*/
+  locationColumn:     "latitude",
+/*
   // Center and zoom radius that your map defaults to when location services are off.
   // If useDefaultMapBounds is true (see section 2), this also determines which addresses get priority with autocomplete
   */
