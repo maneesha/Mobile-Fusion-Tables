@@ -99,6 +99,12 @@ $.extend(MapsLib, {
     addressShow: false,
 
     dropDowns: [
+    {label: "Exclude Closed Markets?",
+      options: [
+        ["No", "", true],
+        ["Yes", "'closed_number' = 10"]
+      ]},
+
     {label: "Choose day of week", 
      options: [
        ["Any", "", true],
