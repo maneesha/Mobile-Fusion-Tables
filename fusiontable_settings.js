@@ -99,10 +99,10 @@ $.extend(MapsLib, {
     addressShow: false,
 
     dropDowns: [
-    {label: "Exclude Closed Markets?",
+    {label: "Exclude Markets Closed for Season?",
       options: [
         ["No", "", true],
-        ["Yes", "'closed_number' = 10"]
+        ["Yes", "'operating_status' DOES NOT CONTAIN 'Closed'"]
       ]},
 
     {label: "Choose day of week", 
@@ -284,7 +284,7 @@ $.extend(MapsLib, {
   delimitedColumns: {"violations": ";"},
 */
 
-customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {{else}} <a href= {{ row.website }} target = '_blank'> {{row.name}} </a> {{/if}} </div> {{#if row.closed_TF }}CLOSED FOR SEASON{{/if}} <br>  {{row.day}} {{row.start_time}} to {{row.end_time}}. <br> <div style = 'white-space:pre-wrap'>{{row.at_place}}</div> {{#if isListView}} <div style='white-space:pre-wrap; color:#484848;'>Vendors: {{row.vendors}} </div> {{/if}}",
+customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {{else}} <a href= {{ row.website }} target = '_blank'> {{row.name}} </a> {{/if}} </div> {{row.operating_status}} <br>  {{row.day}} {{row.start_time}} to {{row.end_time}}. <br> <div style = 'white-space:pre-wrap'>{{row.at_place}}</div> {{#if isListView}} <div style='white-space:pre-wrap; color:#484848;'>Vendors: {{row.vendors}} </div> {{/if}}",
 
 /*
   customInfoboxHtml: " \
