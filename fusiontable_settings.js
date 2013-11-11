@@ -96,7 +96,11 @@ $.extend(MapsLib, {
   searchPage: { 
     allColumns: false,
     //distanceFilter: {},
-    addressShow: false,
+    addressShow: true,
+
+    distanceFilter: {
+      dropDown: [ ['Anywhere', '0', true], ['2 blocks', '400 meters'], ['1/2 mile', '.5 miles'], ['1 mile'], ['2 miles']]
+    },
 
     dropDowns: [
     {label: "Exclude Markets Closed for Season?",

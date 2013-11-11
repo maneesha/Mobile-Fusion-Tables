@@ -10,7 +10,6 @@
  * https://github.com/derekeder/FusionTable-Map-Template/wiki/License
  */
 
-
 var MapsLib = MapsLib || {};
 $.extend(MapsLib, {
   // map and positions
@@ -38,7 +37,14 @@ $.extend(MapsLib, {
   locationColumn:     MapsLib.locationColumn || "",
   secondaryLocationColumn: "",
   defaultMapBounds:   {},
-  map_centroid:       new google.maps.LatLng(37.77, -122.45), // center on SF if all else fails
+
+  ///////
+  //maneesha:
+  //change this to default to Phila  if all else fails
+  //map_centroid:       new google.maps.LatLng(37.77, -122.45), // center on SF if all else fails
+  ///////
+  
+  map_centroid: new google.maps.LatLng(39.952, -75.163),
   defaultZoom:        9,
 
   // markers
@@ -67,7 +73,7 @@ $.extend(MapsLib, {
   searchPage:         MapsLib.searchPage || {},
   columns:            [],
   in_query:           false, 
-  searchRadius:       0,
+  searchRadiusMeters: 0,
   customSearchFilter: "",
   listViewRows:       [],
   selectedListRow:    null,
@@ -363,7 +369,7 @@ $.extend(MapsLib, {
 
     // request list of columns
     var qstr = "https://www.googleapis.com/fusiontables/v1/tables/" + MapsLib.fusionTableId + "?maxResults=100&callback=MapsLib.setColumns&key=" + MapsLib.googleApiKey;
-    console.log("Query: " + qstr); //called when web page loads
+    console.log("Query: " + qstr);
     $.ajax({url: qstr, dataType: "jsonp"});
 
     if (typeof MapsLib.customInfoboxHtml == "string")
@@ -632,9 +638,9 @@ $.extend(MapsLib, {
         var distEntry = distances[i]; // format: [zoom, label, true if selected]
         var label = distEntry[0];
         var zoomstring = (distEntry.length > 1) ? distEntry[1] : distEntry[0];
-        var zoom = MapsLib.zoomFromRadiusMeters(MapsLib.metersFromString(zoomstring));
+        var radiusMeters = MapsLib.metersFromString(zoomstring);
         var selected = (distEntry.length > 2 && distEntry[2] == true) ? " selected='selected'" : "";
-        html.push("<option value='" + zoom + "'" + selected + ">" + label + "</option>");
+        html.push("<option value='" + radiusMeters + "'" + selected + ">" + label + "</option>");
       }
       html.push("</select>");
     }
@@ -766,10 +772,7 @@ $.extend(MapsLib, {
 
     //-----custom filters-------
     var address = $("#search_address").val();
-    MapsLib.searchRadius = (firstSearch == true) ? 0 : $("#search_radius").val()*1;
-    // HACK: search radius was calibrated for min(width,height)=320, so we offset the zoom accordingly
-    var min_diameter = Math.min($(document).width(), $(document).height());
-    var zoomOffset = Math.round(Math.log(min_diameter / 320) / Math.LN2);
+    MapsLib.searchRadiusMeters = (firstSearch == true) ? 0 : $("#search_radius").val()*1;
 
     var whereClauses = [];
     $("input[data-ref='column']").each(function( index ) { 
@@ -822,9 +825,9 @@ $.extend(MapsLib, {
 
           MapsLib.map.setCenter(MapsLib.currentPinpoint);
           MapsLib.map_centroid = MapsLib.currentPinpoint;
-          if (MapsLib.searchRadius > 0)
+          if (MapsLib.searchRadiusMeters > 0)
           {
-            MapsLib.map.setZoom(MapsLib.searchRadius+zoomOffset-1);
+            MapsLib.map.setZoom(MapsLib.zoomFromRadiusMeters(MapsLib.searchRadiusMeters)-1);
           }
 
           MapsLib.safeShow(MapsLib.localMarker, false);
@@ -847,9 +850,9 @@ $.extend(MapsLib, {
               MapsLib.infoWindow.open(MapsLib.map);
             }); 
           }
-          if (MapsLib.searchPage.distanceFilter.filterSearchResults && MapsLib.searchRadius > 0)
+          if (MapsLib.searchPage.distanceFilter.filterSearchResults && MapsLib.searchRadiusMeters > 0)
           {
-            whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + MapsLib.currentPinpoint.toString() + "," + MapsLib.searchRadiusMeters() + "))";
+            whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + MapsLib.currentPinpoint.toString() + "," + MapsLib.searchRadiusMeters + "))";
             MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
           }
           MapsLib.submitSearch(whereClause, MapsLib.map, MapsLib.currentPinpoint);
@@ -865,13 +868,13 @@ $.extend(MapsLib, {
       MapsLib.currentPinpoint = MapsLib.map_centroid;
       MapsLib.safeShow(MapsLib.localMarker, true);
       MapsLib.safeShow(MapsLib.addrMarker, false);
-      if (MapsLib.searchRadius > 0)
+      if (MapsLib.searchRadiusMeters > 0)
       {
         if (MapsLib.searchPage.distanceFilter.filterSearchResults)
         {
-          whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + MapsLib.map_centroid.toString() + "," + MapsLib.searchRadiusMeters() + "))";
+          whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + MapsLib.map_centroid.toString() + "," + MapsLib.searchRadiusMeters + "))";
         }
-        MapsLib.map.setZoom(MapsLib.searchRadius+zoomOffset-1);
+        MapsLib.map.setZoom(MapsLib.zoomFromRadiusMeters(MapsLib.searchRadiusMeters)-1);
         MapsLib.drawSearchRadiusCircle(MapsLib.map_centroid);
       }
       MapsLib.submitSearch(whereClause, MapsLib.map, MapsLib.map_centroid);
@@ -970,24 +973,17 @@ $.extend(MapsLib, {
     //you can find your Ids inside the link generated by the 'Publish' option in Fusion Tables
     //for more details, see https://developers.google.com/fusiontables/docs/v1/using#WorkingStyles
 
-    console.log("SQL Query: " + whereClause); //called when webpage loads and with each search
+    console.log("SQL Query: " + whereClause);
     MapsLib.searchrecords = new google.maps.FusionTablesLayer({
       query: {
         from:   MapsLib.fusionTableId,
         select: MapsLib.locationColumn,
         where:  whereClause
       },
-
-    ///////NEED TO SET styleId & templateId
-    ///////go to map view, publish, get html/js
-    //////Find styleId & templateId codes there
-    //////more info:  http://stackoverflow.com/questions/18417223/why-is-fusion-table-style-not-reflected-in-google-map
-
       styleId: 8,
       templateId: 10,
       suppressInfoWindows: true
     });
-
     google.maps.event.clearListeners(MapsLib.searchrecords, 'click');
     google.maps.event.addListener(MapsLib.searchrecords, 'click', function(e) {
 
@@ -1005,9 +1001,6 @@ $.extend(MapsLib, {
     });
     MapsLib.searchrecords.setMap(map);
     MapsLib.overrideCenter = true;
-    /////////////
-    //console.log(MapsLib.searchrecords);
-    /////////////////
   },
 
   clearSearch: function() {
@@ -1019,10 +1012,6 @@ $.extend(MapsLib, {
       MapsLib.searchRadiusCircle.setMap(null);
     MapsLib.infoWindow.close();
     MapsLib.customSearchFilter = "";
-  },
-
-  searchRadiusMeters: function() {
-    return (100 * Math.pow(2, (18-MapsLib.searchRadius)));
   },
 
   drawSearchRadiusCircle: function(point) {
@@ -1040,7 +1029,7 @@ $.extend(MapsLib, {
       center: point,
       clickable: false,
       zIndex: -1,
-      radius: MapsLib.searchRadiusMeters()
+      radius: MapsLib.searchRadiusMeters
     };
     MapsLib.searchRadiusCircle = new google.maps.Circle(circleOptions);
   },
@@ -1178,7 +1167,7 @@ $.extend(MapsLib, {
     {
       if ($.inArray(column, MapsLib.numericalColumns) == -1 && $.inArray(column, MapsLib.dateColumns) == -1) 
       {
-        MapsLib.variantColumns.push(MapsLib.safeFifnumfeld(column));
+        MapsLib.variantColumns.push(MapsLib.safeField(column));
         return true;
       }
       var cIndex = $.inArray(column, customColumns);
@@ -1222,7 +1211,13 @@ $.extend(MapsLib, {
 
   updateListView: function() {
       var whereClause = MapsLib.locationColumn + " not equal to ''";
-      //Results returned alphabetically.
+
+      //////
+      //maneesha:
+      //I WANT RESULTS ORDERED BY NAME SO I CHANGED
+      //var orderClause = "";
+      /////
+
       var orderClause = "name";
       if (MapsLib.customSearchFilter.length > 0) {
         whereClause += " AND " + MapsLib.customSearchFilter;
@@ -1230,32 +1225,28 @@ $.extend(MapsLib, {
       // HACK: all we really want is the 10 rows that come after the existing MapsLib.listViewRows.
       //  but there's no way to get rows x to x+10 without also querying all the rows up to it.
       var limitClause = " LIMIT " + (MapsLib.listViewRows.length + 10);
-
-      ////////////
-      ////This adds rows in increments of 10 as you scroll through the list
-      ////It gives you final actual number when you scroll to end
-      ////If all rows fit on screen and there's nothing to scroll, it just says 0
-      //console.log("There are this many rows:"  + MapsLib.listViewRows.length);
-      ////////////
-
-
       var centerPoint = (MapsLib.currentPinpoint != null) ? MapsLib.currentPinpoint : MapsLib.map.getCenter();
 
       if (centerPoint == null)
       {
         whereClause += limitClause;
       }
-      else if (MapsLib.searchRadius > 0 && MapsLib.searchPage.distanceFilter.filterListResults)
+      else if (MapsLib.searchRadiusMeters > 0 && MapsLib.searchPage.distanceFilter.filterListResults)
       {
-        whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + centerPoint.toString() + "," + MapsLib.searchRadiusMeters() + "))";
+        whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + centerPoint.toString() + "," + MapsLib.searchRadiusMeters + "))";
         whereClause += limitClause;
       }
       else
       {
         // FusionTable query limitation: There can at most be one spatial condition or "order by distance" condition.  We can't do both.
-        //orderClause changed to name since location services don't work anyways.  
+
+
+        ///////
+        //maneesha:
+        //I removed this because I don't want to order by distance
+        ///////
+
         //orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
-        orderClause = 'name';
         orderClause += limitClause;
       }
 
@@ -1274,33 +1265,12 @@ $.extend(MapsLib, {
       }
       // Empty the listview object.
       var existingRows = MapsLib.listViewRows.length;
-      //////existing rows.... behaves just like listviewrows above
-      //console.log('****************')
-      //console.log('existing rows length: ' + existingRows)
-      //console.log('*****************')
-      ///////////////
-
       if (existingRows == 0)
       {
         $("ul#listview").html("");
       }
 
       var numRows = (json != undefined && json.rows != undefined) ? json.rows.length : 0;
-
-
-      //////////now try numRows.....This gives me the number that I want
-      /////////This does what I want but only when you go to listview -- would like the alert to come up in map after you hit search
-      console.log('********############********')
-      console.log('numrows length: ' + numRows)
-      console.log('*********###########********')
-      if (numRows == 0) {
-        console.log("there are no markets that meet your search criteria");
-        alert("No markets meet your search criteria");
-      }
-      ///////////////      
-
-
-
       // we already have the first existingRows, we're just appending the remainder
       for (var ix=existingRows; ix<numRows; ix++){
         // make row object.
@@ -1310,14 +1280,11 @@ $.extend(MapsLib, {
         }
         MapsLib.listViewRows.push(row);
 
-
         var row_html = '<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="d" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-d"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#page-map" id="listrow-' + ix + '" data-transition="slidedown" class="ui-link-inherit">';
         row_html += MapsLib.infoboxContent(row, true);
         row_html += '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>';
 
-
         $("ul#listview").append(row_html);
-
 
         $("a#listrow-" + ix).click(function(e) { 
           var index = e.currentTarget.id.split("-")[1]*1;
