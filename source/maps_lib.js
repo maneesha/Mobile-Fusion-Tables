@@ -37,14 +37,16 @@ $.extend(MapsLib, {
   locationColumn:     MapsLib.locationColumn || "",
   secondaryLocationColumn: "",
   defaultMapBounds:   {},
-
+  //map_centroid:       new google.maps.LatLng(37.77, -122.45), // center on SF if all else fails
   ///////
   //maneesha:
   //change this to default to Phila  if all else fails
   //map_centroid:       new google.maps.LatLng(37.77, -122.45), // center on SF if all else fails
   ///////
-  
   map_centroid: new google.maps.LatLng(39.952, -75.163),
+
+
+
   defaultZoom:        9,
 
   // markers
@@ -194,19 +196,19 @@ $.extend(MapsLib, {
   // Q: What do Google Maps' zoom values represent?
   // A: They're exponential power values, where
   // - zoom of X+1 zooms in to half the radius of X.
-  // - zoom of 14 = radius of 1 mile in a 320px window
+  // - zoom of 14 = radius of 1 km in a 320px window (1 mile in a 520px window)
   zoomFromRadiusMeters: function(meters) {
     if (meters == 0) return 0; // don't return infinity
     var min_diameter = Math.min($(document).width(), $(document).height());
-    var radiusMiles320px = (320 * meters) / (1610 * min_diameter);
-    return 14 - Math.round(Math.log(radiusMiles320px) / Math.LN2);
+    var radiusMiles360px = (360 * meters) / (1610 * min_diameter);
+    return 13 - Math.round(Math.log(radiusMiles360px) / Math.LN2);
   }, 
 
   radiusMetersFromZoom: function(zoom) {
     if (zoom == 0) return 0;
     var min_diameter = Math.min($(document).width(), $(document).height());
-    var radiusMiles320px = Math.pow(2, 14 - zoom);
-    return (1610 * radiusMiles320px * min_diameter / 320); // 1610 meters/mile
+    var radiusMiles360px = Math.pow(2, 13 - zoom);
+    return (1610 * radiusMiles360px * min_diameter / 360); // 1610 meters/mile
   },
 
   metersFromString: function(str) {
@@ -587,6 +589,12 @@ $.extend(MapsLib, {
         }
       })
     }
+    if (window.location.href.indexOf("#page-search") != -1)
+    {
+      // launched directly into the search page: redraw search fields
+      $("#section-search").trigger('create');
+      $("#section-search").css("visibility","visible"); 
+    }
   },
 
   // RECURSIVE HACK: There's a race condition between Google Maps and JQuery Mobile
@@ -765,6 +773,11 @@ $.extend(MapsLib, {
 
     if (firstSearch)
     {
+      if (window.location.href.indexOf("#page-search") != -1)
+      {
+        // launched directly into the search page: hide search fields during setup
+        $("#section-search").css("visibility","hidden"); 
+      }
       $("#section-search").html(MapsLib.searchHtml());
     }
 
@@ -827,7 +840,7 @@ $.extend(MapsLib, {
           MapsLib.map_centroid = MapsLib.currentPinpoint;
           if (MapsLib.searchRadiusMeters > 0)
           {
-            MapsLib.map.setZoom(MapsLib.zoomFromRadiusMeters(MapsLib.searchRadiusMeters)-1);
+            MapsLib.map.setZoom(MapsLib.zoomFromRadiusMeters(MapsLib.searchRadiusMeters));
           }
 
           MapsLib.safeShow(MapsLib.localMarker, false);
@@ -874,7 +887,7 @@ $.extend(MapsLib, {
         {
           whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + MapsLib.map_centroid.toString() + "," + MapsLib.searchRadiusMeters + "))";
         }
-        MapsLib.map.setZoom(MapsLib.zoomFromRadiusMeters(MapsLib.searchRadiusMeters)-1);
+        MapsLib.map.setZoom(MapsLib.zoomFromRadiusMeters(MapsLib.searchRadiusMeters));
         MapsLib.drawSearchRadiusCircle(MapsLib.map_centroid);
       }
       MapsLib.submitSearch(whereClause, MapsLib.map, MapsLib.map_centroid);
@@ -980,6 +993,12 @@ $.extend(MapsLib, {
         select: MapsLib.locationColumn,
         where:  whereClause
       },
+
+      ////////
+      //maneesha:
+      //change styleId & templateId based on GFT map > publish > get HTML/JS
+      //////////
+
       styleId: 8,
       templateId: 10,
       suppressInfoWindows: true
@@ -1211,6 +1230,7 @@ $.extend(MapsLib, {
 
   updateListView: function() {
       var whereClause = MapsLib.locationColumn + " not equal to ''";
+      var orderClause = "";
 
       //////
       //maneesha:
@@ -1219,6 +1239,7 @@ $.extend(MapsLib, {
       /////
 
       var orderClause = "name";
+
       if (MapsLib.customSearchFilter.length > 0) {
         whereClause += " AND " + MapsLib.customSearchFilter;
       }
@@ -1240,14 +1261,13 @@ $.extend(MapsLib, {
       {
         // FusionTable query limitation: There can at most be one spatial condition or "order by distance" condition.  We can't do both.
 
+          ///////
+          //maneesha:
+          //I removed this because I don't want to order by distance
+          ///////
 
-        ///////
-        //maneesha:
-        //I removed this because I don't want to order by distance
-        ///////
-
-        //orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
-        orderClause += limitClause;
+          //orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
+          orderClause += limitClause;
       }
 
       if (MapsLib.listViewRows.length == 0)
