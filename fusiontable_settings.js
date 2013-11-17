@@ -103,7 +103,7 @@ $.extend(MapsLib, {
     },
 
     dropDowns: [
-    {label: "Exclude Markets Closed for Season?",
+    {label: "Exclude Markets Closed for Season",
       options: [
         ["No", "", true],
         ["Yes", "'operating_status' DOES NOT CONTAIN 'Closed'"]
@@ -124,14 +124,15 @@ $.extend(MapsLib, {
 //Google Fusion Table Column 'season':['year round', 'seasonal']
 //Google Fusion Table Column 'closed': ['closed', null]
 
-    {label: "Year round or seasonal",
-     options: [
-       ["Any", "", true],
-       ["Year Round", "'season' = 'year round'"],
-       ["Seasonal", "'season' = 'seasonal'"]
-    ]},
+    //remove this since we have 'Exclude Markets Closed For Season' search option
 
-    //selector to choose to include markets closed for season
+    // {label: "Year round or seasonal",
+    //  options: [
+    //    ["Any", "", true],
+    //    ["Year Round", "'season' = 'year round'"],
+    //    ["Seasonal", "'season' = 'seasonal'"]
+    // ]},
+
 
     {label: "Choose a vendor", 
      options: [
