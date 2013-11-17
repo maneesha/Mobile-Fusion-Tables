@@ -249,7 +249,7 @@ $.extend(MapsLib, {
 
 
   // Title bar (including title of website)
-  title: "Philadelphia Area Farmers Markets",
+  title: "Philly Farmers Markets",
   aboutPage: "Find farmers markets in the Philadelphia by location, day of week, or participating vendors. <br><br>I developed this site over a few months in summer - fall 2013, a little bit at a time while my baby son napped. Some data might be incorrect, and t's all based on the 2013 season, and since it's fall now, many markets are closed.  Share any changes <a href='https://docs.google.com/forms/d/1Keh4D0Cj6kvcoVa-uCdt5iLJdHI6TBN0pzTntuG5KVQ/viewform'>here</a> and I'll make them on this site.  <br><br> Also, there are probably some features you wish this map had.  I have some ideas myself but they're not all feasible given my time, my budget, and my skills. But if you want to share any ideas, feel free to submit those <a href='https://docs.google.com/forms/d/1Keh4D0Cj6kvcoVa-uCdt5iLJdHI6TBN0pzTntuG5KVQ/viewform'>here</a> too and I'll consider them.<br><br>Many thanks to the folks who developed the template for this app: <br> Mobile Fusion Tables was originally based on Derek Eder's Fusion Table Searchable Map Template.  This is an SF Brigade project for Code for America. Started by Mark Brenig-Jones, completed by Rego Sen, with contributions from Sidney Zhang and Andrew Byrne.  Clone the repo <a href='https://github.com/sfbrigade/Mobile-Fusion-Tables'>here</a> to make your own mapping app.  Or <a href = 'https://docs.google.com/a/phillywanderer.com/forms/d/1iuGkoaCt6ZgUeTg5j7MBJmDr3Tj2ClPY1zXhL2d5nJA/viewform'>contact me</a> to hire me to build it for you.",
 
    addrMarkerImage:    'http://maps.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
