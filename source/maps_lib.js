@@ -124,9 +124,19 @@ $.extend(MapsLib, {
   stringExists: function(teststr) {
     return (typeof teststr != 'undefined' && teststr != null && teststr.length > 0);
   },
+  
+  //remove all this if things don't work
+  getDefault: function(defaultval, obj)
+  {
+    return (typeof obj == 'undefined' || obj == undefined) ? defaultval : obj;
+  },
+  //remove the above if things don't work
+
 
   updateTitle: function() {
-    var aboutContent = MapsLib.default(MapsLib.defaultAboutPage, MapsLib.aboutPage);
+    //add this back & remove next line if things don't work
+    //var aboutContent = MapsLib.default(MapsLib.defaultAboutPage, MapsLib.aboutPage);
+    var aboutContent = MapsLib.getDefault(MapsLib.defaultAboutPage, MapsLib.aboutPage);
     if (typeof MapsLib.title != 'undefined' && MapsLib.title != undefined)
     {
       document.title = MapsLib.title;
@@ -139,10 +149,13 @@ $.extend(MapsLib, {
     }
   },
 
+  /*
+  add these back if things don't work  
   default: function(defaultval, obj)
   {
     return (typeof obj == 'undefined' || obj == undefined) ? defaultval : obj;
   },
+  */
 
   getDateString: function(val)
   {
