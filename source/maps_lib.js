@@ -78,6 +78,7 @@ $.extend(MapsLib, {
   searchRadiusMeters: 0,
   customSearchFilter: "",
   listViewRows:       [],
+  listViewSortByColumn: MapsLib.listViewSortByColumn || "",
   selectedListRow:    null,
   //unicode characters to not print to screen
   //From https://github.com/slevithan/XRegExp/blob/master/src/addons/unicode/unicode-categories.js#L28
@@ -1247,11 +1248,12 @@ $.extend(MapsLib, {
 
       //////
       //maneesha:
-      //I WANT RESULTS ORDERED BY NAME SO I CHANGED
-      //var orderClause = "";
-      /////
+      //I WANT RESULTS ORDERED BY NAME SO I CHANGED THIS
+      //changing orderClause = 'name' does not work when you search
+      //by location because GFT will not allow you to search by location and 
+      //sort by location
+      ///////
 
-      var orderClause = "name";
 
       if (MapsLib.customSearchFilter.length > 0) {
         whereClause += " AND " + MapsLib.customSearchFilter;
@@ -1268,6 +1270,10 @@ $.extend(MapsLib, {
       else if (MapsLib.searchRadiusMeters > 0 && MapsLib.searchPage.distanceFilter.filterListResults)
       {
         whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + centerPoint.toString() + "," + MapsLib.searchRadiusMeters + "))";
+        if (MapsLib.listViewSortByColumn)
+        {
+          whereClause += " ORDER BY " + MapsLib.listViewSortByColumn;
+        }
         whereClause += limitClause;
       }
       else
@@ -1280,7 +1286,10 @@ $.extend(MapsLib, {
           ///////
 
           //orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
-          orderClause += limitClause;
+          //orderClause += limitClause;
+          //orderClause = 'name';
+          orderClause = "ST_DISTANCE(" + MapsLib.locationColumn + ", LATLNG" + centerPoint.toString() + ")";
+          orderClause += limitClause
       }
 
       if (MapsLib.listViewRows.length == 0)

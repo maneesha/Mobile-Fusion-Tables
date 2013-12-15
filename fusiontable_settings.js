@@ -288,6 +288,7 @@ $.extend(MapsLib, {
   // delimitedColumns (optional): specify delimiter per column, and row.COLUMN_NAME will return an array
   delimitedColumns: {"violations": ";"},
 */
+listViewSortByColumn: 'name',
 
 customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {{else}} <a href= {{ row.website }} target = '_blank'> {{row.name}} </a> {{/if}} </div> {{row.operating_status}} <br>  {{row.day}} {{row.start_time}} to {{row.end_time}}. <br> <div style = 'white-space:pre-wrap'>{{row.at_place}}</div> {{#if isListView}} <div style='white-space:pre-wrap; color:#484848;'>Vendors: {{row.vendors}} </div> {{/if}}",
 
