@@ -367,7 +367,7 @@ customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {
     //                      is greater than this (in either direction)
     snapToNearbyZoomIfRatioGreaterThan: true
   },
-  map_centroid: new google.maps.LatLng(39.952, -75.163)
+  map_centroid: new google.maps.LatLng(40.01815,-75.172432)
 
 
 });
