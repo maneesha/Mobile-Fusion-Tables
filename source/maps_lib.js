@@ -47,7 +47,7 @@ $.extend(MapsLib, {
 
 
 
-  defaultZoom:        9,
+  defaultZoom:        13,
 
   // markers
   addrMarker:         null,

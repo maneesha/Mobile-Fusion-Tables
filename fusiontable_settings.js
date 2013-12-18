@@ -345,12 +345,12 @@ customInfoboxHtml: "<div style='color:black'>  {{#if isListView}} {{row.name}} {
     center: "Philadelphia, PA",
 
     // "X miles" or "X meters"
-    radius: "6 miles"
+    radius: "5 miles"
   },
 
   // Set useNearbyLocation to false if you don't want to get the user's location.
   useNearbyLocation: {
-    startAtNearbyLocation:     true,
+    startAtNearbyLocation:     false,
 
     // If true: use nearby location only if we're within default map bounds
     //          otherwise, post boundsExceededMessage (if non-empty) and use mapDefaultCenter.
