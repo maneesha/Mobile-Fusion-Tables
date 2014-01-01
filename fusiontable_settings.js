@@ -238,7 +238,16 @@ $.extend(MapsLib, {
       ["Z Food Farm", "'vendors' CONTAINS 'Z Food Farm'"],
       ["Zea May", "'vendors' CONTAINS 'Zea May'"],
       ["Zsas Gourmet Ice Cream", "'vendors' CONTAINS 'Zsas Gourmet Ice Cream'"]
-     ]}
+     ]}, 
+
+     {label: "Sponsor",
+     options: [
+       ["Any", "", true],
+       ["Farm to City", "'sponsor' = 'farm_to_city'"],
+       ["Food Trust", "'sponsor' = 'food_trust'"],
+       ["Other", "'sponsor' = ''"]
+     ] }
+
     ]//closes dropDowns list
   },  //closes searchPage:
 
