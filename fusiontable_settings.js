@@ -105,8 +105,9 @@ $.extend(MapsLib, {
     dropDowns: [
     {label: "Exclude Markets Closed for Season",
       options: [
-        ["No", "", true],
-        ["Yes", "'operating_status' DOES NOT CONTAIN 'Closed'"]
+        ["Yes", "'operating_status' DOES NOT CONTAIN 'Closed'", true],
+        ["No", ""]
+
       ]},
 
     {label: "Choose day of week", 
