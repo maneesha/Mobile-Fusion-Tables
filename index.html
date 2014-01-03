@@ -172,7 +172,8 @@
 
     <div data-role="content">
         <div id="section-search" data-role="fieldcontain"></div>
-        <button class="btn" id="search">Search</button>
+        <button class =  'btn' id= 'search_reset' data-theme='r'>Reset Fields</button>
+        <button class="btn" id="search" data-theme='b'>Search</button>
         <div style = 'color:#808080; font-style:italic; font-size:85%'>Remember, schedules might change.  A market might take a week off. Year-round markets might have a limited schedule in the off months.  Some vendors might only participate certain weeks. Check with the market directly for more information.</div>
     </div>
   </div>
@@ -196,9 +197,14 @@
         MapsLib.onEnterMap();
         MapsLib.doSearch();
       });
+
       $("#search_top").click(function(){
         MapsLib.onEnterMap();
         MapsLib.doSearch();
+      });
+
+      $("#search_reset").click(function(){
+        MapsLib.resetSearch();
       });
 
       window.addEventListener('popstate', function(e) { 
